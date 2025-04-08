@@ -1,6 +1,6 @@
 @use "../../colors" as colors;
 
-.not-found-container {
+.not-found {
   text-align: center;
   padding: 40px 0;
 
@@ -9,7 +9,7 @@
     margin: 30px 0;
   }
 
-  .not-found__paragraph {
+  .not-found__message {
     font-size: 1.2rem;
     color: colors.$medium-gray;
   }

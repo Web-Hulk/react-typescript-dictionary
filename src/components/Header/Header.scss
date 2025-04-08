@@ -1,27 +1,32 @@
 @use "../../colors" as colors;
 
-.header-container {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  .header-content {
+  .header__content {
     display: flex;
     align-items: center;
 
-    .header-fonts-container {
+    .header__font-selector {
       position: relative;
 
-      .active-font-btn {
+      .header__font-button {
         width: 200px;
         height: 40px;
         border-radius: 12px;
+        background-color: colors.$pure-white;
         outline: none;
-        border: 1px solid colors.$pure-black;
+        border: 1px solid colors.$medium-gray;
         cursor: pointer;
+
+        &:hover {
+          background-color: colors.$light-gray;
+        }
       }
 
-      .fonts-list {
+      .header__font-list {
         position: absolute;
         z-index: 1;
         background: colors.$pure-white;
@@ -30,8 +35,9 @@
         list-style-type: none;
         width: 100%;
         border-radius: 12px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
-        .fonts-list__item {
+        .header__font-item {
           padding: 12px;
           border-radius: 12px;
           cursor: pointer;
@@ -66,13 +72,6 @@
           }
         }
       }
-    }
-
-    .intersection {
-      width: 4px;
-      height: 40px;
-      background-color: colors.$light-gray;
-      margin: 0 24px;
     }
   }
 }

@@ -1,86 +1,55 @@
-import { useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import logo from "../../assets/logo.svg";
-import { Toggle } from "../Toggle/Toggle";
+import { useEscapeKey } from "../../hooks/useEscapeKey";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { LIST_ITEMS } from "./data/listItems";
 import "./Header.scss";
 
 export const Header = () => {
   const [activeFont, setActiveFont] = useState<string>("Mono");
-  const [isFontListDisplayed, setIsFontDisplayed] = useState<boolean>(false);
+  const [isFontListVisible, setIsFontListVisible] = useState<boolean>(false);
   const fontListRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setIsFontDisplayed(false);
-      }
-    };
-
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        fontListRef.current &&
-        !fontListRef.current.contains(e.target as Node)
-      ) {
-        setIsFontDisplayed(false);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  useEscapeKey(() => setIsFontListVisible(false));
+  useOutsideClick(fontListRef as RefObject<HTMLDivElement>, () =>
+    setIsFontListVisible(false)
+  );
 
   useEffect(() => {
-    const getFontNameFromLocalStorage =
-      localStorage.getItem("font-name") || "Roboto";
-
-    setActiveFont(getFontNameFromLocalStorage);
-
-    document.documentElement.style.setProperty(
-      "--font-family",
-      getFontNameFromLocalStorage
-    );
+    const storedFont = localStorage.getItem("font-name") || "Roboto";
+    setActiveFont(storedFont);
+    document.documentElement.style.setProperty("--font-family", storedFont);
   }, [activeFont]);
 
-  const handleActiveFontButton = () => {
-    setIsFontDisplayed(!isFontListDisplayed);
-  };
+  const toggleFontList = () => setIsFontListVisible(!isFontListVisible);
 
-  const setLocalStorageItem = (fontName: string) => {
-    localStorage.setItem("font-name", fontName);
-  };
-
-  const handleFontItem = (fontName: string) => {
+  const handleFontSelection = (fontName: string) => {
     setActiveFont(fontName);
-    setLocalStorageItem(fontName);
+    localStorage.setItem("font-name", fontName);
+    setIsFontListVisible(false);
   };
 
   return (
-    <div className="header-container">
+    <div className="header">
       <Link to="/">
-        <img src={logo} alt="Logo" className="header-icon" />
+        <img src={logo} alt="Logo" className="header__logo" />
       </Link>
 
-      <div className="header-content">
-        <div className="header-fonts-container" ref={fontListRef}>
-          <button onClick={handleActiveFontButton} className="active-font-btn">
+      <div className="header__content">
+        <div className="header__font-selector" ref={fontListRef}>
+          <button onClick={toggleFontList} className="header__font-button">
             {activeFont}
           </button>
 
-          {isFontListDisplayed && (
-            <ul className="fonts-list">
+          {isFontListVisible && (
+            <ul className="header__font-list">
               {LIST_ITEMS.map(({ fontName, cssValue }) => (
                 <li
                   onClick={() => {
-                    handleFontItem(fontName);
-                    setIsFontDisplayed(false);
+                    handleFontSelection(fontName);
                   }}
-                  className={`fonts-list__item ${cssValue} ${
+                  className={`header__font-item  ${cssValue} ${
                     activeFont === fontName ? "selected" : ""
                   }`}
                   key={`List item-${fontName}`}
@@ -91,10 +60,6 @@ export const Header = () => {
             </ul>
           )}
         </div>
-
-        <div className="intersection" />
-
-        <Toggle />
       </div>
     </div>
   );
