@@ -33,3 +33,8 @@ export interface DictionaryInterface {
   };
   sourceUrls?: string[];
 }
+
+export type ListType = {
+  fontName: string;
+  cssValue: string;
+};

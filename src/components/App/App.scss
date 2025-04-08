@@ -1,3 +1,5 @@
+@use "../../colors" as colors;
+
 .container {
   max-width: 768px;
   width: 95%;
@@ -14,13 +16,13 @@
       font-size: 20px;
       border-radius: 16px;
       border: none;
-      background-color: #f4f4f4;
-      color: #2d2d2d;
+      background-color: colors.$light-gray;
+      color: colors.$dark-gray;
       font-weight: bold;
       outline: none;
 
       &:focus {
-        border: 2px solid #a445ed;
+        border: 2px solid colors.$vivid-purple;
       }
     }
 
@@ -41,11 +43,11 @@
       .word {
         font-size: 4rem;
         font-weight: 700;
-        color: #2d2d2d;
+        color: colors.$dark-gray;
       }
 
       .phonetic {
-        color: #a445ed;
+        color: colors.$vivid-purple;
         font-size: 1.5rem;
       }
 
@@ -78,7 +80,7 @@
 
           .single-box {
             .title {
-              color: gray;
+              color: colors.$medium-gray;
               margin: 16px 0;
               font-size: 1.25rem;
             }
@@ -90,17 +92,17 @@
 
               .value {
                 font-size: 1rem;
-                color: #a445ed;
+                color: colors.$vivid-purple;
                 font-weight: bold;
                 width: fit-content;
-                border: 1px solid #a445ed;
+                border: 1px solid colors.$vivid-purple;
                 border-radius: 12px;
                 padding: 10px 14px;
                 margin: 8px 8px 0 0;
 
                 &:hover {
                   cursor: pointer;
-                  background-color: #a445ed;
+                  background-color: colors.$vivid-purple;
                   color: #fff;
                 }
               }
@@ -114,11 +116,11 @@
                 font-size: 1.125rem;
 
                 &::marker {
-                  color: #a445ed;
+                  color: colors.$vivid-purple;
                 }
 
                 &.example {
-                  color: gray;
+                  color: colors.$medium-gray;
                 }
               }
             }
@@ -129,7 +131,7 @@
 
     .links-box {
       .word {
-        color: gray;
+        color: colors.$medium-gray;
         margin: 16px 0;
         font-size: 1.25rem;
       }
@@ -144,7 +146,7 @@
           cursor: pointer;
 
           .link {
-            color: #000;
+            color: colors.$pure-black;
           }
         }
       }

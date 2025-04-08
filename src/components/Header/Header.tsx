@@ -1,18 +1,63 @@
-import { useState } from "react";
-import logo from "../../assets/logo.svg";
-import "./Header.scss";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
+import logo from "../../assets/logo.svg";
+import { Toggle } from "../Toggle/Toggle";
+import { LIST_ITEMS } from "./data/listItems";
+import "./Header.scss";
 
 export const Header = () => {
   const [activeFont, setActiveFont] = useState<string>("Mono");
   const [isFontListDisplayed, setIsFontDisplayed] = useState<boolean>(false);
+  const fontListRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsFontDisplayed(false);
+      }
+    };
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        fontListRef.current &&
+        !fontListRef.current.contains(e.target as Node)
+      ) {
+        setIsFontDisplayed(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const getFontNameFromLocalStorage =
+      localStorage.getItem("font-name") || "Roboto";
+
+    setActiveFont(getFontNameFromLocalStorage);
+
+    document.documentElement.style.setProperty(
+      "--font-family",
+      getFontNameFromLocalStorage
+    );
+  }, [activeFont]);
 
   const handleActiveFontButton = () => {
     setIsFontDisplayed(!isFontListDisplayed);
   };
 
+  const setLocalStorageItem = (fontName: string) => {
+    localStorage.setItem("font-name", fontName);
+  };
+
   const handleFontItem = (fontName: string) => {
     setActiveFont(fontName);
+    setLocalStorageItem(fontName);
   };
 
   return (
@@ -22,75 +67,34 @@ export const Header = () => {
       </Link>
 
       <div className="header-content">
-        <div className="header-fonts-container">
+        <div className="header-fonts-container" ref={fontListRef}>
           <button onClick={handleActiveFontButton} className="active-font-btn">
             {activeFont}
           </button>
 
           {isFontListDisplayed && (
             <ul className="fonts-list">
-              <li
-                onClick={() => {
-                  handleFontItem("Mono");
-                  setIsFontDisplayed(false);
-                }}
-                className={`fonts-list__item ${
-                  activeFont === "Mono" ? "selected" : ""
-                }`}
-              >
-                Mono
-              </li>
-              <li
-                onClick={() => {
-                  handleFontItem("Akaya Kanadaka");
-                  setIsFontDisplayed(false);
-                }}
-                className={`fonts-list__item ${
-                  activeFont === "Akaya Kanadaka" ? "selected" : ""
-                }`}
-              >
-                Akaya Kanadaka
-              </li>
-              <li
-                onClick={() => {
-                  handleFontItem("Indie Flower");
-                  setIsFontDisplayed(false);
-                }}
-                className={`fonts-list__item ${
-                  activeFont === "Indie Flower" ? "selected" : ""
-                }`}
-              >
-                Indie Flower
-              </li>
-              <li
-                onClick={() => {
-                  handleFontItem("Playfair Display");
-                  setIsFontDisplayed(false);
-                }}
-                className={`fonts-list__item ${
-                  activeFont === "Playfair Display" ? "selected" : ""
-                }`}
-              >
-                Playfair Display
-              </li>
-              <li
-                onClick={() => {
-                  handleFontItem("Spectral");
-                  setIsFontDisplayed(false);
-                }}
-                className={`fonts-list__item ${
-                  activeFont === "Spectral" ? "selected" : ""
-                }`}
-              >
-                Spectral
-              </li>
+              {LIST_ITEMS.map(({ fontName, cssValue }) => (
+                <li
+                  onClick={() => {
+                    handleFontItem(fontName);
+                    setIsFontDisplayed(false);
+                  }}
+                  className={`fonts-list__item ${cssValue} ${
+                    activeFont === fontName ? "selected" : ""
+                  }`}
+                  key={`List item-${fontName}`}
+                >
+                  {fontName}
+                </li>
+              ))}
             </ul>
           )}
         </div>
 
         <div className="intersection" />
 
-        <div>Dark mode</div>
+        <Toggle />
       </div>
     </div>
   );

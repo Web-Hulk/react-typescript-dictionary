@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import { DictionaryInterface } from "../../types";
 import { Header } from "../Header/Header";
 import { Input } from "../Input/Input";
@@ -13,16 +14,7 @@ function App() {
   const [urls, setUrls] = useState<string[]>([]);
   const [responseStatus, setResponseStatus] = useState<number>(200);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (data && data?.length > 0) {
-      const newUrls = [
-        ...new Set(data?.flatMap((item) => item.sourceUrls)),
-      ].filter((url): url is string => url !== undefined);
-
-      setUrls(newUrls);
-    }
-  }, [data]);
+  const location = useLocation();
 
   const fetchData = (name: string) => {
     const baseURL = `https://api.dictionaryapi.dev/api/v2/entries/en/${name}`;
@@ -32,7 +24,6 @@ function App() {
     axios
       .get(baseURL)
       .then((response) => {
-        console.log("status: ", response.status);
         setData(response.data);
         setResponseStatus(response.status);
       })
@@ -44,6 +35,29 @@ function App() {
     setWord(name);
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    const { pathname } = location;
+
+    if (pathname !== "/") {
+      const updatedWord = pathname.slice(1);
+      fetchData(updatedWord);
+    } else {
+      setWord("");
+      setData([]);
+      setUrls([]);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (data && data?.length > 0) {
+      const newUrls = [
+        ...new Set(data?.flatMap((item) => item.sourceUrls)),
+      ].filter((url): url is string => url !== undefined);
+
+      setUrls(newUrls);
+    }
+  }, [data]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWord(e.target.value);

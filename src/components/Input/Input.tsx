@@ -1,5 +1,6 @@
-import search from "../../assets/icon-search.svg";
+import { useNavigate } from "react-router";
 import ClipLoader from "react-spinners/ClipLoader";
+import search from "../../assets/icon-search.svg";
 
 type InputProps = {
   word: string;
@@ -14,6 +15,8 @@ export const Input = ({
   handleInput,
   fetchData,
 }: InputProps) => {
+  const navigate = useNavigate();
+
   return (
     <div className="input-container">
       <input
@@ -25,6 +28,7 @@ export const Input = ({
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             fetchData(word);
+            navigate(`/${word}`);
           }
         }}
       />
@@ -35,8 +39,11 @@ export const Input = ({
         <img
           src={search}
           alt="Search"
-          onClick={() => fetchData(word)}
           className="input-search-icon"
+          onClick={() => {
+            fetchData(word);
+            navigate(`/${word}`);
+          }}
         />
       )}
     </div>

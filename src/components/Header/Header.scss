@@ -1,3 +1,5 @@
+@use "../../colors" as colors;
+
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -15,15 +17,15 @@
         height: 40px;
         border-radius: 12px;
         outline: none;
-        border: 1px solid black;
+        border: 1px solid colors.$pure-black;
         cursor: pointer;
       }
 
       .fonts-list {
         position: absolute;
         z-index: 1;
-        background: white;
-        border: 1px solid #f4f4f4;
+        background: colors.$pure-white;
+        border: 1px solid colors.$light-gray;
         top: 50px;
         list-style-type: none;
         width: 100%;
@@ -34,13 +36,33 @@
           border-radius: 12px;
           cursor: pointer;
 
+          &.mono {
+            font-family: "Roboto";
+          }
+
+          &.akaya {
+            font-family: "Akaya Kanadaka";
+          }
+
+          &.indie {
+            font-family: "Indie Flower";
+          }
+
+          &.playfair {
+            font-family: "Playfair Display";
+          }
+
+          &.poppins {
+            font-family: "Poppins";
+          }
+
           &.selected {
-            background-color: #f4f4f4;
+            background-color: colors.$light-gray;
             font-weight: bold;
           }
 
           &:hover {
-            background-color: #f4f4f4;
+            background-color: colors.$light-gray;
           }
         }
       }
@@ -49,7 +71,7 @@
     .intersection {
       width: 4px;
       height: 40px;
-      background-color: #f4f4f4;
+      background-color: colors.$light-gray;
       margin: 0 24px;
     }
   }

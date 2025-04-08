@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import new_window from "../../assets/icon-new-window.svg";
 import play from "../../assets/icon-play.svg";
 import { DictionaryInterface } from "../../types";
@@ -10,6 +11,8 @@ type WordProps = {
 };
 
 export const Word = ({ data, fetchData, urls }: WordProps) => {
+  const navigate = useNavigate();
+
   const handlePlayPhoneticButton = (wordAudio: string) => {
     const audioElement = new Audio(wordAudio);
     audioElement.play();
@@ -79,7 +82,10 @@ export const Word = ({ data, fetchData, urls }: WordProps) => {
                                         {synonyms.map((synonym, index) => (
                                           <p
                                             className="value"
-                                            onClick={() => fetchData(synonym)}
+                                            onClick={() => {
+                                              fetchData(synonym);
+                                              navigate(`/${synonym}`);
+                                            }}
                                             key={`${synonym}-${index}`}
                                           >
                                             {synonym}
@@ -97,7 +103,10 @@ export const Word = ({ data, fetchData, urls }: WordProps) => {
                                         {antonyms.map((antonym, index) => (
                                           <p
                                             className="value"
-                                            onClick={() => fetchData(antonym)}
+                                            onClick={() => {
+                                              fetchData(antonym);
+                                              navigate(`/${antonym}`);
+                                            }}
                                             key={`${antonym}-${index}`}
                                           >
                                             {antonym}
@@ -121,7 +130,10 @@ export const Word = ({ data, fetchData, urls }: WordProps) => {
                             {synonyms.map((synonym, index) => (
                               <p
                                 className="value"
-                                onClick={() => fetchData(synonym)}
+                                onClick={() => {
+                                  fetchData(synonym);
+                                  navigate(`/${synonym}`);
+                                }}
                                 key={`${synonym}-${index}`}
                               >
                                 {synonym}
@@ -139,7 +151,10 @@ export const Word = ({ data, fetchData, urls }: WordProps) => {
                             {antonyms.map((antonym, index) => (
                               <p
                                 className="value"
-                                onClick={() => fetchData(antonym)}
+                                onClick={() => {
+                                  fetchData(antonym);
+                                  navigate(`/${antonym}`);
+                                }}
                                 key={`${antonym}-${index}`}
                               >
                                 {antonym}
