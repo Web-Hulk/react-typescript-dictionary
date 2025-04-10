@@ -1,6 +1,6 @@
-import { ListType } from "../../../types";
+import { FontListType } from "../../../types";
 
-export const LIST_ITEMS: ListType[] = [
+export const FONT_LIST_ITEMS: FontListType[] = [
   {
     fontName: "Roboto",
     cssValue: 'roboto',

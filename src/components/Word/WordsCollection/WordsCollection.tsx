@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import "./WordsCollection.scss";
 
 type WordsCollection = {
   title: string;

@@ -1,0 +1,32 @@
+@use "../../../colors" as colors;
+
+.words-collection {
+  .words-collection__title {
+    color: colors.$medium-gray;
+    margin-top: 16px;
+    font-size: 1.25rem;
+  }
+
+  .words-collection__list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .words-collection__item {
+      font-size: 1rem;
+      color: colors.$vivid-purple;
+      font-weight: bold;
+      width: fit-content;
+      border: 1px solid colors.$vivid-purple;
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin: 8px 8px 0 0;
+
+      &:hover {
+        cursor: pointer;
+        background-color: colors.$vivid-purple;
+        color: #fff;
+      }
+    }
+  }
+}

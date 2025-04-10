@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import logo from "../../assets/logo.svg";
 import { useEscapeKey } from "../../hooks/useEscapeKey";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { LIST_ITEMS } from "./data/listItems";
+import { FONT_LIST_ITEMS } from "./data/listItems";
 import "./Header.scss";
 
 export const Header = () => {
@@ -44,7 +44,7 @@ export const Header = () => {
 
           {isFontListVisible && (
             <ul className="header__font-list">
-              {LIST_ITEMS.map(({ fontName, cssValue }) => (
+              {FONT_LIST_ITEMS.map(({ fontName, cssValue }) => (
                 <li
                   onClick={() => {
                     handleFontSelection(fontName);

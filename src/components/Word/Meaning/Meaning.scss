@@ -1,0 +1,49 @@
+@use "../../../colors" as colors;
+
+.meaning {
+  .meaning-box {
+    margin: 24px 0;
+
+    .meaning__part-of-speech-container {
+      display: flex;
+      align-items: center;
+
+      .meaning__part-of-speech {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .meaning__line {
+        background-color: #e9e9e9;
+        height: 1px;
+        width: 100%;
+        margin-left: 12px;
+      }
+    }
+
+    .meaning__definitions {
+      .meaning__title {
+        color: colors.$medium-gray;
+        margin: 16px 0;
+        font-size: 1.25rem;
+      }
+
+      .meaning__list {
+        margin: 0 32px;
+
+        .meaning__definition {
+          margin: 12px 0;
+          font-size: 1.125rem;
+
+          &::marker {
+            color: colors.$vivid-purple;
+          }
+
+          &.meaning__example {
+            color: colors.$medium-gray;
+          }
+        }
+      }
+    }
+  }
+}

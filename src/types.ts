@@ -12,21 +12,7 @@ export interface DictionaryInterface {
       };
     }
   ];
-  meanings: [
-    {
-      partOfSpeech: string;
-      definitions: [
-        {
-          antonyms: string[];
-          synonyms: string[];
-          definition: string;
-          example: string;
-        }
-      ];
-      antonyms: string[];
-      synonyms: string[];
-    }
-  ];
+  meanings: MeaningType[];
   license?: {
     name: string;
     url: string;
@@ -34,7 +20,22 @@ export interface DictionaryInterface {
   sourceUrls?: string[];
 }
 
-export type ListType = {
+export type MeaningType = {
+  partOfSpeech: string;
+    definitions: [
+      {
+        antonyms: string[];
+        synonyms: string[];
+        definition: string;
+        example: string;
+      }
+    ];
+    antonyms: string[];
+    synonyms: string[];
+}
+
+export type FontListType = {
   fontName: string;
   cssValue: string;
 };
+
