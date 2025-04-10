@@ -1,0 +1,24 @@
+@use "../../../colors" as colors;
+
+.sources {
+  .sources__title {
+    color: colors.$medium-gray;
+    margin: 16px 0;
+    font-size: 1.25rem;
+  }
+
+  .sources__item {
+    display: flex;
+
+    .sources__url {
+      font-size: 1rem;
+      margin-right: 12px;
+      text-decoration: underline;
+      cursor: pointer;
+
+      .sources__link {
+        color: colors.$pure-black;
+      }
+    }
+  }
+}

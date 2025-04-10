@@ -41,6 +41,7 @@ function App() {
 
     if (pathname !== "/") {
       const updatedWord = pathname.slice(1);
+
       fetchData(updatedWord);
     } else {
       setWord("");

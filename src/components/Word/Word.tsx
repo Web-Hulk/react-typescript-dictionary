@@ -1,8 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router";
-import new_window from "../../assets/icon-new-window.svg";
 import play from "../../assets/icon-play.svg";
 import { DictionaryInterface } from "../../types";
+import { Sources } from "./Sources/Sources";
+import { WordsCollection } from "./WordsCollection/WordsCollection";
 
 type WordProps = {
   data: DictionaryInterface[];
@@ -11,8 +11,6 @@ type WordProps = {
 };
 
 export const Word = ({ data, fetchData, urls }: WordProps) => {
-  const navigate = useNavigate();
-
   const handlePlayPhoneticButton = (wordAudio: string) => {
     const audioElement = new Audio(wordAudio);
     audioElement.play();
@@ -54,8 +52,8 @@ export const Word = ({ data, fetchData, urls }: WordProps) => {
                       </div>
 
                       {definition.length !== 0 && (
-                        <div className="single-box">
-                          <p className="title">Meaning</p>
+                        <div className="words-collection">
+                          <p className="words-collection__title">Meaning</p>
 
                           <ul className="single-box-list">
                             {definitions.map(
@@ -74,47 +72,17 @@ export const Word = ({ data, fetchData, urls }: WordProps) => {
                                     </p>
                                   )}
 
-                                  {synonyms.length !== 0 && (
-                                    <div className="single-box">
-                                      <p className="title">Synonyms</p>
+                                  <WordsCollection
+                                    title="Synonyms"
+                                    words={synonyms}
+                                    fetchData={fetchData}
+                                  />
 
-                                      <div className="values-box">
-                                        {synonyms.map((synonym, index) => (
-                                          <p
-                                            className="value"
-                                            onClick={() => {
-                                              fetchData(synonym);
-                                              navigate(`/${synonym}`);
-                                            }}
-                                            key={`${synonym}-${index}`}
-                                          >
-                                            {synonym}
-                                          </p>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  )}
-
-                                  {antonyms.length !== 0 && (
-                                    <div className="single-box">
-                                      <p className="title">Antonyms</p>
-
-                                      <div className="values-box">
-                                        {antonyms.map((antonym, index) => (
-                                          <p
-                                            className="value"
-                                            onClick={() => {
-                                              fetchData(antonym);
-                                              navigate(`/${antonym}`);
-                                            }}
-                                            key={`${antonym}-${index}`}
-                                          >
-                                            {antonym}
-                                          </p>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  )}
+                                  <WordsCollection
+                                    title="Antonyms"
+                                    words={antonyms}
+                                    fetchData={fetchData}
+                                  />
                                 </React.Fragment>
                               )
                             )}
@@ -122,47 +90,17 @@ export const Word = ({ data, fetchData, urls }: WordProps) => {
                         </div>
                       )}
 
-                      {synonyms.length !== 0 && (
-                        <div className="single-box">
-                          <p className="title">Synonyms</p>
+                      <WordsCollection
+                        title="Synonyms"
+                        words={synonyms}
+                        fetchData={fetchData}
+                      />
 
-                          <div className="values-box">
-                            {synonyms.map((synonym, index) => (
-                              <p
-                                className="value"
-                                onClick={() => {
-                                  fetchData(synonym);
-                                  navigate(`/${synonym}`);
-                                }}
-                                key={`${synonym}-${index}`}
-                              >
-                                {synonym}
-                              </p>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {antonyms.length !== 0 && (
-                        <div className="single-box">
-                          <p className="title">Antonyms</p>
-
-                          <div className="values-box">
-                            {antonyms.map((antonym, index) => (
-                              <p
-                                className="value"
-                                onClick={() => {
-                                  fetchData(antonym);
-                                  navigate(`/${antonym}`);
-                                }}
-                                key={`${antonym}-${index}`}
-                              >
-                                {antonym}
-                              </p>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+                      <WordsCollection
+                        title="Antonyms"
+                        words={antonyms}
+                        fetchData={fetchData}
+                      />
                     </div>
                   );
                 }
@@ -172,22 +110,7 @@ export const Word = ({ data, fetchData, urls }: WordProps) => {
         );
       })}
 
-      {urls.length !== 0 && (
-        <div className="links-box">
-          <p className="word">Sources</p>
-
-          {urls.map((url, index) => (
-            <div className="link-box" key={`${url}-${index}`}>
-              <p className="value">
-                <a href={url} target="_blank" className="link">
-                  {url}
-                </a>
-              </p>
-              <img src={new_window} alt="New Window" />
-            </div>
-          ))}
-        </div>
-      )}
+      <Sources urls={urls} />
     </div>
   );
 };
