@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import { getData } from "../../api/axios";
 import { DictionaryInterface } from "../../types";
 import { Header } from "../Header/Header";
 import { Input } from "../Input/Input";
@@ -17,12 +17,9 @@ function App() {
   const location = useLocation();
 
   const fetchData = (name: string) => {
-    const baseURL = `https://api.dictionaryapi.dev/api/v2/entries/en/${name}`;
-
     setIsLoading(true);
 
-    axios
-      .get(baseURL)
+    getData(name)
       .then((response) => {
         setData(response.data);
         setResponseStatus(response.status);
