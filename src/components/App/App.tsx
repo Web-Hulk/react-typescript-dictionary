@@ -12,7 +12,7 @@ function App() {
   const [word, setWord] = useState<string>("");
   const [data, setData] = useState<DictionaryInterface[]>([]);
   const [urls, setUrls] = useState<string[]>([]);
-  const [responseStatus, setResponseStatus] = useState<number>(200);
+  const [responseStatus, setResponseStatus] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const location = useLocation();
 
@@ -33,6 +33,13 @@ function App() {
     setIsLoading(false);
   };
 
+  const cleanState = () => {
+    setWord("");
+    setData([]);
+    setUrls([]);
+    setResponseStatus(200);
+  };
+
   useEffect(() => {
     const { pathname } = location;
 
@@ -41,9 +48,7 @@ function App() {
 
       fetchData(updatedWord);
     } else {
-      setWord("");
-      setData([]);
-      setUrls([]);
+      cleanState();
     }
   }, [location]);
 
